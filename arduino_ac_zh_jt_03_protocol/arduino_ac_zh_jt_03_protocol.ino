@@ -66,7 +66,7 @@ void addCommandToData(char* command, List& data) {
   addBytesToData(command, 4, data);
 }
 
-void addSpeedToData(char* speed, List& data) {
+void addParameterToData(char* speed, List& data) {
   addBytesToData(speed, 4, data);
 }
 
@@ -113,7 +113,7 @@ void setTemperatureTo(int temperature) {
   addHeaderToData(data);
   addCommandToData("BF40", data);
   
-  addSpeedToData("A956", data);
+  addParameterToData("A956", data);
   addTemperatureToData(temperature, "B", data);
   addChecksumToData("45", data);
   addFooterToData(data);
