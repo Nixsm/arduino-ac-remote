@@ -40,7 +40,7 @@ byte hexToByte(char hex) {
   return hex - 'A' + 10;
 }
 
-unsigned int highEndRawData[2] = {540, 1550};
+unsigned int highEndRawData[2] = {520, 1550};
 
 void byteToRawData(byte bytee, List& data) {
   for (int i = 3; i >= 0; --i) {
@@ -56,8 +56,8 @@ void addBytesToData(char* bytes, size_t count, List& data) {
 }
 
 void addHeaderToData(List& data) {
-  addToList(data, 6124);
-  addToList(data, 7352);
+  addToList(data, 6234);
+  addToList(data, 7302);
 
   addBytesToData("FF00FF00", 8, data);
 }
@@ -83,9 +83,14 @@ void addTemperatureToData(int temp, char* mode, List& data) {
       addBytesToData("8", 1, data);    
     break;
     case Eighteen:
-      addBytesToData("b", 1, data);
+      addBytesToData("B", 1, data);
       addModeToData(mode, data);
-      addBytesToData("4", 1, data);   
+      addBytesToData("4", 1, data);          
+    break;
+    case TwentyFive:
+      addBytesToData("6", 1, data);
+      addModeToData(mode, data);
+      addBytesToData("9", 1, data);          
     break;
     default:
     break;
@@ -108,6 +113,19 @@ void addFooterToData(List& data) {
   addToList(data, 616);
 }
 
+void turnOff() {
+  List data;
+  addHeaderToData(data);
+  addCommandToData("FF00", data);
+
+  addParameterToData("E916", data);
+  addTemperatureToData(25, "B", data);
+  addChecksumToData("45", data);
+  addFooterToData(data);
+
+  irsend.sendRaw(data.data, data.counter, khz); 
+}
+
 void setTemperatureTo(int temperature) {
   List data;
   addHeaderToData(data);
@@ -127,10 +145,15 @@ void setup()
 }
 
 void loop() {  
-
+  
   if (Serial.available() > 1) {
     int temp = Serial.parseInt();
-    setTemperatureTo(temp);
+    Serial.println(temp);
+    if (temp == 0) {
+      turnOff();
+    } else {
+      setTemperatureTo(temp);
+    }
   }
 }
 
