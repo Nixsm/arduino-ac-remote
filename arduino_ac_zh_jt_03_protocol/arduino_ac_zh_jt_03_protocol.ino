@@ -70,7 +70,7 @@ void addSpeedToData(char* speed, List& data) {
   addBytesToData(speed, 4, data);
 }
 
-void addTemperatureToData(Temperature temp, char* mode, List& data) {
+void addTemperatureToData(int temp, char* mode, List& data) {
   switch (temp) {
     case Sixteen:
       addBytesToData("F", 1, data);
