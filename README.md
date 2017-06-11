@@ -13,6 +13,7 @@
 - [ ] Implement Swing
 - [ ] Implement Air flow
 - [ ] Implement different modes
+- [x] Implement 16-31 Temperature options
 
 
 ### References
