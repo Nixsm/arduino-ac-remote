@@ -23,16 +23,24 @@ ff00ff00   3fc0  a956  6 b 9  45 // 26-25 // Cool // Speed 1
 
 ff00ff00   7f80  a956  6 f 9  05 // 25    // Auto // Speed 1
 
-Header // Command // Speed // Temp // Mode // Temp // CheckSum	
+ff00ff00   ff00  e916  6 b 9  45 // 25    // Cool // Speed 1 - Turn Off
+ff00ff00   ff00  a956  6 b 9  45 // 25    // Cool // Speed 1 - Turn On
+
+Header // Command // Parameter // Temp // Mode // Temp // CheckSum	
 
 Command:
 * BF40 = Up Temperature
-* 3FC0 = Down Temperature
 * 7F80 = Change mode
+* 3FC0 = Down Temperature
+	- Parameters:
+		* A956 - 1
+		* AD52 - 2
 
-Speed: 
-* A956 - 1
-* AD52 - 2
+* FF00 = Change State (On/Off)
+	- Parameters:
+		* E916 = Turn Off
+		* A956 = Turn On
+
 
 Mode:
 * B - Cool
