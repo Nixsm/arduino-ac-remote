@@ -6,7 +6,7 @@
 - [ ] Create a proper documentation of the protocol
 - [ ] Implement CheckSum 2s Complement
 - [x] Implement set temperature method
-- [ ] Implement On/Off
+- [x] Implement On/Off
 - [ ] Implement Sleep Mode
 - [ ] Implement Turbo mode
 - [ ] Implement Fan speed
