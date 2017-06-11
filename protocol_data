@@ -1,0 +1,42 @@
+ff00ff00   3fc0  a956  f b 0  45 // 16-16 // Cool // Speed 1
+ff00ff00   bf40  a956  7 b 8  45 // 16-17 // Cool // Speed 1
+ff00ff00   bf40  a956  b b 4  45 // 17-18 // Cool // Speed 1
+ff00ff00   bf40  a956  3 b c  45 // 18-19 // Cool // Speed 1
+ff00ff00   bf40  a956  d b 2  45 // 19-20 // Cool // Speed 1
+ff00ff00   bf40  a956  5 b a  45 // 20-21 // Cool // Speed 1 
+ff00ff00   bf40  a956  9 b 6  45 // 21-22 // Cool // Speed 1 
+ff00ff00   bf40  a956  1 b e  45 // 22-23 // Cool // Speed 1 
+ff00ff00   bf40  a956  e b 1  45 // 23-24 // Cool // Speed 1 
+ff00ff00   bf40  a956  6 b 9  45 // 24-25 // Cool // Speed 1 
+ff00ff00   bf40  a956  a b 5  45 // 25-26 // Cool // Speed 1 
+ff00ff00   bf40  a956  2 b d  45 // 26-27 // Cool // Speed 1
+ff00ff00   bf40  a956  c b 3  45 // 27-28 // Cool // Speed 1
+ff00ff00   bf40  a956  4 b b  45 // 28-29 // Cool // Speed 1
+ff00ff00   bf40  a956  8 b 7  45 // 29-30 // Cool // Speed 1
+ff00ff00   bf40  a956  0 b f  45 // 30-31 // Cool // Speed 1
+                  
+ff00ff00   bf40  ad52  6 b 9  45 // 24-25 // Cool // Speed 2 
+                  
+ff00ff00   bf40  a956  a e 5  15 // 25-26 // Heat // Speed 1 
+                  
+ff00ff00   3fc0  a956  6 b 9  45 // 26-25 // Cool // Speed 1
+
+ff00ff00   7f80  a956  6 f 9  05 // 25    // Auto // Speed 1
+
+Header // Command // Speed // Temp // Mode // Temp // CheckSum	
+
+Command:
+* BF40 = Up Temperature
+* 3FC0 = Down Temperature
+* 7F80 = Change mode
+
+Speed: 
+* A956 - 1
+* AD52 - 2
+
+Mode:
+* B - Cool
+* E - Heat
+* F - Auto
+
+Checksum is CheckSum8 2s Complement
