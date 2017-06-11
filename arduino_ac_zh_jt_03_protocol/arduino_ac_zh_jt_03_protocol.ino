@@ -4,23 +4,23 @@ const int khz = 38;
 
 IRsend irsend;
 
-enum Temperature {
-   Sixteen = 16,
-   Seventeen = 17,
-   Eighteen = 18,
-   Nineteen = 19,
-   Twenty = 20,
-   TwentyOne = 21,
-   TwentyTwo = 22,
-   TwentyThree = 23,
-   TwentyFour = 24,
-   TwentyFive = 25,
-   TwentySix = 26,
-   TwentySeven = 27,
-   TwentyEight = 28,
-   TwentyNine = 29,
-   Thirty = 30,
-   ThirtyOne = 31
+char temperatures[16][3] = {
+  "F00",
+  "708",
+  "B04",
+  "30C",
+  "D02",
+  "50A",
+  "906",
+  "10E",
+  "E01",
+  "609",
+  "A05",
+  "20D",
+  "C03",
+  "40B",
+  "807",
+  "00F",
 };
 
 struct List {
@@ -40,7 +40,7 @@ byte hexToByte(char hex) {
   return hex - 'A' + 10;
 }
 
-unsigned int highEndRawData[2] = {520, 1550};
+unsigned int highEndRawData[2] = {530, 1540};
 
 void byteToRawData(byte bytee, List& data) {
   for (int i = 3; i >= 0; --i) {
@@ -70,31 +70,12 @@ void addParameterToData(char* parameter, List& data) {
   addBytesToData(parameter, 4, data);
 }
 
-void addTemperatureToData(int temp, char* mode, List& data) {
-  switch (temp) {
-    case Sixteen:
-      addBytesToData("F", 1, data);
-      addModeToData(mode, data);
-      addBytesToData("0", 1, data);
-    break;
-    case Seventeen:
-      addBytesToData("7", 1, data);
-      addModeToData(mode, data);
-      addBytesToData("8", 1, data);    
-    break;
-    case Eighteen:
-      addBytesToData("B", 1, data);
-      addModeToData(mode, data);
-      addBytesToData("4", 1, data);          
-    break;
-    case TwentyFive:
-      addBytesToData("6", 1, data);
-      addModeToData(mode, data);
-      addBytesToData("9", 1, data);          
-    break;
-    default:
-    break;
-  }
+void addTemperatureToData(int temp, char mode, List& data) {
+  unsigned int realTempIndex = temp - 16;
+  char* temperature = temperatures[realTempIndex];
+
+  temperature[1] = mode;
+  addBytesToData(temperature, 3, data);
 }
 
 void addModeToData(char* mode, List& data) {
@@ -119,7 +100,7 @@ void turnOff() {
   addCommandToData("FF00", data);
 
   addParameterToData("E916", data);
-  addTemperatureToData(25, "B", data);
+  addTemperatureToData(25, 'B', data);
   addChecksumToData("45", data);
   addFooterToData(data);
 
@@ -132,7 +113,7 @@ void setTemperatureTo(int temperature) {
   addCommandToData("BF40", data);
   
   addParameterToData("A956", data);
-  addTemperatureToData(temperature, "B", data);
+  addTemperatureToData(temperature, 'B', data);
   addChecksumToData("45", data);
   addFooterToData(data);
 
