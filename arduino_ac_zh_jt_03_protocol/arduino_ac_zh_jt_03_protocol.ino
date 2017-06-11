@@ -66,8 +66,8 @@ void addCommandToData(char* command, List& data) {
   addBytesToData(command, 4, data);
 }
 
-void addParameterToData(char* speed, List& data) {
-  addBytesToData(speed, 4, data);
+void addParameterToData(char* parameter, List& data) {
+  addBytesToData(parameter, 4, data);
 }
 
 void addTemperatureToData(int temp, char* mode, List& data) {
