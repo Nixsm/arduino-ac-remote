@@ -14,6 +14,7 @@
 - [ ] Implement Air flow
 - [ ] Implement different modes
 - [x] Implement 16-31 Temperature options
+- [ ] Create a better estimation of the High and Low value used by the IR protocol -- This requeries reading multiple commands and making an average of them
 
 
 ### References
