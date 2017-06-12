@@ -40,7 +40,7 @@ byte hexToByte(char hex) {
   return hex - 'A' + 10;
 }
 
-unsigned int highEndRawData[2] = {530, 1540};
+unsigned int highEndRawData[2] = {500, 1570};
 
 void byteToRawData(byte bytee, List& data) {
   for (int i = 3; i >= 0; --i) {
