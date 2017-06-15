@@ -2,25 +2,25 @@
 
 const uint16_t khz = 38;
 
-IRsend irsend(2);
+IRsend irsend(4);
 
-char temperatures[16][3] = {
-  'F00',
-  '708',
-  'B04',
-  '30C',
-  'D02',
-  '50A',
-  '906',
-  '10E',
-  'E01',
-  '609',
-  'A05',
-  '20D',
-  'C03',
-  '40B',
-  '807',
-  '00F'
+char temperatures[16][4] = {
+  "F00",
+  "708",
+  "B04",
+  "30C",
+  "D02",
+  "50A",
+  "906",
+  "10E",
+  "E01",
+  "609",
+  "A05",
+  "20D",
+  "C03",
+  "40B",
+  "807",
+  "00F"
 };
 
 struct List {
@@ -105,11 +105,6 @@ struct KomecoController {
     addFooterToData(data);
 
     irsend.sendRaw(data.data, data.counter, khz);
-    for (int i = 0; i < data.counter; ++i) {
-      Serial.print(data.data[i]);
-      Serial.print(", ");
-    }
-    Serial.print("\n");
   }
 
   void setTemperatureTo(int temperature) {
