@@ -15,6 +15,8 @@ ff00ff00   bf40  a956  4 b b  45 // 28-29 // Cool // Speed 1
 ff00ff00   bf40  a956  8 b 7  45 // 29-30 // Cool // Speed 1
 ff00ff00   bf40  a956  0 b f  45 // 30-31 // Cool // Speed 1
                   
+ff00ff00   5fa0  a758  6 b 9  45 // 25    // Cool // Speed Auto
+ff00ff00   5fa0  a35c  6 b 9  45 // 25    // Cool // Speed 3
 ff00ff00   bf40  ad52  6 b 9  45 // 24-25 // Cool // Speed 2 
                   
 ff00ff00   bf40  a956  a e 5  15 // 25-26 // Heat // Speed 1 
@@ -25,19 +27,33 @@ ff00ff00   7f80  a956  6 f 9  05 // 25    // Auto // Speed 1
 
 ff00ff00   ff00  e916  6 b 9  45 // 25    // Cool // Speed 1 - Turn Off
 ff00ff00   ff00  a956  6 b 9  45 // 25    // Cool // Speed 1 - Turn On
+ff00ff00   6f90  a15e  6 b 9  45 // Sleep Mode Off
+ff00ff00   6f90  21de  6 b 9  45 // Sleep Mode On
 
 Header // Command // Parameter // Temp // Mode // Temp // CheckSum	
 
 Command:
+* 6F90 = Change Sleep Mode
+	- Parameters: (Mode)
+		* 21DE - On
+		* A15E - Off
+* 5FA0 = Change speed
+	- Parameters: (Speed)
+		* A956 - 1
+		* AD52 - 2
+		* A35C - 3
+		* A758 - Auto
 * BF40 = Up Temperature
 * 7F80 = Change mode
 * 3FC0 = Down Temperature
-	- Parameters:
+	- Parameters: (Speed)
 		* A956 - 1
 		* AD52 - 2
+		* A35C - 3
+		* A758 - Auto
 
 * FF00 = Change State (On/Off)
-	- Parameters:
+	- Parameters: (Power state)
 		* E916 = Turn Off
 		* A956 = Turn On
 
