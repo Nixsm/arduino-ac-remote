@@ -1,140 +1,32 @@
-#include <IRremote.h>
+#include "komeco.h"
 
-const int khz = 38;
+#define ESP8266 0
 
-IRsend irsend;
-
-char temperatures[16][3] = {
-  "F00",
-  "708",
-  "B04",
-  "30C",
-  "D02",
-  "50A",
-  "906",
-  "10E",
-  "E01",
-  "609",
-  "A05",
-  "20D",
-  "C03",
-  "40B",
-  "807",
-  "00F",
-};
-
-struct List {
-  unsigned int data[197];
-  int counter = 0;
-};
-
-void addToList(List& data, unsigned int value) {
-  data.data[data.counter++] = value;
-}
-
-
-byte hexToByte(char hex) {
-  if (hex >= '0' && hex <= '9') {
-    return hex - '0';
-  }
-  return hex - 'A' + 10;
-}
-
-unsigned int highEndRawData[2] = {500, 1570};
-
-void byteToRawData(byte bytee, List& data) {
-  for (int i = 3; i >= 0; --i) {
-    addToList(data, highEndRawData[0]);
-    addToList(data, highEndRawData[bitRead(bytee, i)]);
-  }
-}
-
-void addBytesToData(char* bytes, size_t count, List& data) {
-  for (int i = 0; i < count; ++i) {
-    byteToRawData(hexToByte(bytes[i]), data);    
-  }
-}
-
-void addHeaderToData(List& data) {
-  addToList(data, 6234);
-  addToList(data, 7302);
-
-  addBytesToData("FF00FF00", 8, data);
-}
-
-void addCommandToData(char* command, List& data) {
-  addBytesToData(command, 4, data);
-}
-
-void addParameterToData(char* parameter, List& data) {
-  addBytesToData(parameter, 4, data);
-}
-
-void addTemperatureToData(int temp, char mode, List& data) {
-  unsigned int realTempIndex = temp - 16;
-  char* temperature = temperatures[realTempIndex];
-
-  temperature[1] = mode;
-  addBytesToData(temperature, 3, data);
-}
-
-void addModeToData(char* mode, List& data) {
-  addBytesToData(mode, 1, data);
-}
-
-void addChecksumToData(char* checksum, List& data) {
-  addBytesToData(checksum, 2, data);
-}
-
-void addFooterToData(List& data) {
-  addBytesToData("4AB", 3, data);
-  
-  addToList(data, 608);
-  addToList(data, 7372);
-  addToList(data, 616);
-}
-
-void turnOff() {
-  List data;
-  addHeaderToData(data);
-  addCommandToData("FF00", data);
-
-  addParameterToData("E916", data);
-  addTemperatureToData(25, 'B', data);
-  addChecksumToData("45", data);
-  addFooterToData(data);
-
-  irsend.sendRaw(data.data, data.counter, khz); 
-}
-
-void setTemperatureTo(int temperature) {
-  List data;
-  addHeaderToData(data);
-  addCommandToData("BF40", data);
-  
-  addParameterToData("A956", data);
-  addTemperatureToData(temperature, 'B', data);
-  addChecksumToData("45", data);
-  addFooterToData(data);
-
-  irsend.sendRaw(data.data, data.counter, khz); 
-}
+KomecoController komeco;
 
 void setup()
 {
-  Serial.begin(9600);
+  pinMode(2, OUTPUT);
+  komeco.setup();
+  Serial.begin(115200);
+  delay(1000);
 }
 
-void loop() {  
-  
-  if (Serial.available() > 1) {
-    int temp = Serial.parseInt();
-    Serial.println(temp);
-    if (temp == 0) {
-      turnOff();
-    } else {
-      setTemperatureTo(temp);
-    }
-  }
+void loop() {
+  Serial.print("Setting temperature to 25\n");
+    komeco.setTemperatureTo(21);
+    delay(10000);
+    Serial.print("Setting Speed to Auto\n");
+    komeco.setSpeedTo(Auto);
+    delay(10000);
+    Serial.print("Turning off...\n");
+    komeco.turnOff();
+    delay(10000);
+  // int temp = Serial.parseInt();
+  // Serial.printf("temp: " + temp);
+//   if (temp == 0) {
+//     komeco.turnOff();
+//   } else {
+//     komeco.setTemperatureTo(temp);
+//   }
 }
-
