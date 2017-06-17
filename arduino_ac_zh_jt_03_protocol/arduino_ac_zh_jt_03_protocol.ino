@@ -13,20 +13,16 @@ void setup()
 }
 
 void loop() {
+  Serial.println("Setting sleep mode to true");
+  komeco.setSleepModeTo(true);
+  delay(20000);
   Serial.print("Setting temperature to 25\n");
-    komeco.setTemperatureTo(21);
-    delay(10000);
-    Serial.print("Setting Speed to Auto\n");
-    komeco.setSpeedTo(Auto);
-    delay(10000);
-    Serial.print("Turning off...\n");
-    komeco.turnOff();
-    delay(10000);
-  // int temp = Serial.parseInt();
-  // Serial.printf("temp: " + temp);
-//   if (temp == 0) {
-//     komeco.turnOff();
-//   } else {
-//     komeco.setTemperatureTo(temp);
-//   }
+  komeco.setTemperatureTo(21);
+  delay(10000);
+  Serial.print("Setting Speed to Auto\n");
+  komeco.setSpeedTo(Auto);
+  delay(10000);
+  Serial.print("Turning off...\n");
+  komeco.turnOff();
+  delay(10000);
 }

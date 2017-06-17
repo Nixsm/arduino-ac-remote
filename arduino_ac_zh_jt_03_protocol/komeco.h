@@ -143,6 +143,21 @@ struct KomecoController {
     irsend.sendRaw(data.data, data.counter, khz); 
   }
 
+  void setSleepModeTo(bool sleepy) {
+    List data;
+    addHeaderToData(data);
+    addCommandToData("6F90", data);
+
+    char *sleepMode = sleepy ? "21DE" : "A15E";
+
+    addParameterToData(sleepMode, data);
+    addTemperatureToData(25, 'B', data);
+    addChecksumToData("45", data);
+    addFooterToData(data);
+
+    irsend.sendRaw(data.data, data.counter, khz);
+  }
+
   void setTemperatureTo(int temperature) {
     List data;
     addHeaderToData(data);
